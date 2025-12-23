@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visual Logic Simulator</title>
+</head>
+
+<body>
+  <div id="app">
+    <aside class="sidebar">
+      <h2>Components</h2>
+      <div class="component-item" data-type="INPUT" draggable="true">Switch (Input)</div>
+      <div class="component-item" data-type="OUTPUT" draggable="true">Led (Output)</div>
+      <div class="hr" style="height: 1px; background: #333; margin: 10px 0;"></div>
+      <div class="component-item" data-type="AND" draggable="true">AND Gate</div>
+      <div class="component-item" data-type="OR" draggable="true">OR Gate</div>
+      <div class="component-item" data-type="NOT" draggable="true">NOT Gate</div>
+      <div class="component-item" data-type="XOR" draggable="true">XOR Gate</div>
+    </aside>
+
+    <div class="canvas-container" id="canvas-container">
+      <div id="pan-layer">
+        <!-- SVG Layer for Wires -->
+        <svg id="connections-layer"></svg>
+        <!-- Gates will be appended here as divs -->
+      </div>
+    </div>
+
+    <div class="controls">
+      <button id="btn-clear" style="background: #ff5555; color: white; margin-right: 10px;">Clear All</button>
+      <button id="btn-synthesis" style="background: #ffaa00; margin-right: 10px;">Synthesis</button>
+      <button id="btn-truth-table">Generate Truth Table</button>
+      <div id="status-msg" style="margin-top: 10px; color: #ff5555;"></div>
+    </div>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
