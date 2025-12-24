@@ -1,5 +1,5 @@
 
-import { Circuit, CircuitNode, type NodeType, AndGate, OrGate, NotGate, XorGate, InputNode, OutputNode, CycleDetectedError } from '../core/engine';
+import { Circuit, CircuitNode, type NodeType, AndGate, OrGate, NotGate, InputNode, OutputNode, CycleDetectedError } from '../core/engine';
 import { ModalManager } from './modal';
 import { SynthesisEngine } from '../core/synthesis';
 
@@ -139,7 +139,7 @@ export class CanvasManager {
             case 'AND': node = new AndGate(id, x, y); break;
             case 'OR': node = new OrGate(id, x, y); break;
             case 'NOT': node = new NotGate(id, x, y); break;
-            case 'XOR': node = new XorGate(id, x, y); break;
+
             case 'INPUT': {
                 // Determine label based on count
                 const inputs = Array.from(this.circuit.nodes.values()).filter(n => n.type === 'INPUT');

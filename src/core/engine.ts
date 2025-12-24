@@ -1,5 +1,5 @@
 
-export type NodeType = 'AND' | 'OR' | 'NOT' | 'XOR' | 'INPUT' | 'OUTPUT';
+export type NodeType = 'AND' | 'OR' | 'NOT' | 'INPUT' | 'OUTPUT';
 
 export abstract class CircuitNode {
     id: string;
@@ -88,16 +88,7 @@ export class NotGate extends CircuitNode {
     }
 }
 
-export class XorGate extends CircuitNode {
-    constructor(id: string, x: number, y: number) {
-        super(id, 'XOR', x, y);
-    }
-    compute(): boolean {
-        // XOR: true if odd number of inputs are true (parity), or standard 2-input XOR
-        const trueInputs = this.inputs.filter(i => i.value).length;
-        return trueInputs % 2 === 1;
-    }
-}
+
 
 export class CycleDetectedError extends Error {
     constructor() {
