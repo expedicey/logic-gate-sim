@@ -140,7 +140,13 @@ export class CanvasManager {
             case 'OR': node = new OrGate(id, x, y); break;
             case 'NOT': node = new NotGate(id, x, y); break;
             case 'XOR': node = new XorGate(id, x, y); break;
-            case 'INPUT': node = new InputNode(id, x, y); break;
+            case 'INPUT': {
+                // Determine label based on count
+                const inputs = Array.from(this.circuit.nodes.values()).filter(n => n.type === 'INPUT');
+                const label = String.fromCharCode(65 + inputs.length); // A, B, C...
+                node = new InputNode(id, x, y, label);
+                break;
+            }
             case 'OUTPUT': node = new OutputNode(id, x, y); break;
             default: return;
         }
@@ -159,7 +165,8 @@ export class CanvasManager {
 
         const label = document.createElement('span');
         label.className = 'label';
-        label.innerText = node.type;
+        // Show specified label for Inputs, otherwise just type
+        label.innerText = node.type === 'INPUT' ? node.label : node.type;
         el.appendChild(label);
 
         if (node.type !== 'INPUT') {

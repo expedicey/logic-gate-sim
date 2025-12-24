@@ -11,7 +11,7 @@ export class SynthesisEngine {
         const circuit = new Circuit();
         const startX = 100;
         const startY = 100;
-        const spacingY = 60;
+
 
         // 1. Create Inputs
         const inputs: InputNode[] = [];

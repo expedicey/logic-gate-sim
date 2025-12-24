@@ -41,7 +41,7 @@ export class ModalManager {
 
     // --- Static Generators for Specific Modals ---
 
-    static generateTruthTableHTML(data: { inputs: Record<string, boolean>, outputs: Record<string, boolean> }[]): HTMLElement {
+    static generateTruthTableHTML(data: { inputs: Record<string, boolean>, outputs: Record<string, boolean>, inputLabels: Record<string, string> }[]): HTMLElement {
         const wrapper = document.createElement('div');
 
         // Headers
@@ -62,10 +62,12 @@ export class ModalManager {
         const trHead = document.createElement('tr');
         inputKeys.forEach(k => {
             const th = document.createElement('th');
-            th.innerText = k.substring(0, 4); // Shorten ID
+            // Use Label if available, else generic
+            const label = firstRow.inputLabels?.[k] || k.substring(0, 4);
+            th.innerText = label;
             trHead.appendChild(th);
         });
-        outputKeys.forEach(k => {
+        outputKeys.forEach(() => {
             const th = document.createElement('th');
             th.innerText = "OUT"; // Shorten
             th.classList.add('output-col');
@@ -173,7 +175,7 @@ export class ModalManager {
         btn?.addEventListener('click', () => {
             const cells = container.querySelectorAll('.editable-cell');
             const targets: boolean[] = [];
-            cells.forEach(c => targets.push(c.innerText === '1'));
+            cells.forEach(c => targets.push((c as HTMLElement).innerText === '1'));
             onBuild(parseInt(select.value), targets);
         });
 

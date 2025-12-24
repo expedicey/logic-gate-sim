@@ -10,11 +10,13 @@ export abstract class CircuitNode {
     x: number = 0;
     y: number = 0;
 
-    constructor(id: string, type: NodeType, x: number = 0, y: number = 0) {
+    label: string;
+    constructor(id: string, type: NodeType, x: number = 0, y: number = 0, label: string = '') {
         this.id = id;
         this.type = type;
         this.x = x;
         this.y = y;
+        this.label = label || type;
     }
 
     abstract compute(): boolean;
@@ -39,8 +41,8 @@ export abstract class CircuitNode {
 }
 
 export class InputNode extends CircuitNode {
-    constructor(id: string, x: number, y: number) {
-        super(id, 'INPUT', x, y);
+    constructor(id: string, x: number, y: number, label: string = 'INPUT') {
+        super(id, 'INPUT', x, y, label);
     }
     compute(): boolean {
         return this.value; // Value is set externally
@@ -197,7 +199,7 @@ export class Circuit {
         }
     }
 
-    getTruthTable(): { inputs: Record<string, boolean>, outputs: Record<string, boolean> }[] {
+    getTruthTable(): { inputs: Record<string, boolean>, outputs: Record<string, boolean>, inputLabels: Record<string, string> }[] {
         const inputs = Util.getNodesByType<InputNode>(this, 'INPUT');
         const outputs = Util.getNodesByType<OutputNode>(this, 'OUTPUT');
         const results = [];
@@ -220,10 +222,14 @@ export class Circuit {
             // Record result
             const row = {
                 inputs: {} as Record<string, boolean>,
-                outputs: {} as Record<string, boolean>
+                outputs: {} as Record<string, boolean>,
+                inputLabels: {} as Record<string, string>
             };
 
-            inputs.forEach(inp => row.inputs[inp.id] = inp.value);
+            inputs.forEach(inp => {
+                row.inputs[inp.id] = inp.value;
+                row.inputLabels[inp.id] = inp.label;
+            });
             outputs.forEach(out => row.outputs[out.id] = out.value);
             results.push(row);
         }
